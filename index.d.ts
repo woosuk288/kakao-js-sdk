@@ -1,141 +1,140 @@
 /**
  * @see [Kakao](https://developers.kakao.com/sdk/reference/js/release/Kakao.html)
  */
- declare namespace Kakao {
+declare namespace Kakao {
   /**
    * Kakao JavaScript SDK에서 사용한 리소스를 해제합니다.
    */
-  export function cleanup(): void;
+  function cleanup(): void;
 
   /**
    * 카카오 JavaScript SDK를 초기화합니다. SDK를 사용하기 전에 호출해야 합니다.
    * @param appKey JavaScript 키
    */
-  export function init(appKey: string): void;
+  function init(appKey: string): void;
 
   /**
    * 카카오 JavaScript SDK의 초기화 여부를 반환합니다.
    * @return 초기화되었다면 true, 초기화되지 않았다면 false.
    */
-  export function isInitialized(): boolean;
+  function isInitialized(): boolean;
 
-
+  /**
+   * @see (사용자 정보)[https://developers.kakao.com/docs/latest/ko/kakaologin/common#user-info]
+   */
+  interface UserInfo {
     /**
-     * @see (사용자 정보)[https://developers.kakao.com/docs/latest/ko/kakaologin/common#user-info]
+     *  회원번호
      */
-    export interface UserInfo {
-      /**
-       *  회원번호
-       */
-      id: number;
-
-      /**
-       * 카카오계정 정보
-       */
-      kakao_account: KakaoAccount;
-
-      /**
-       * 카카오싱크 간편가입을 통해 로그인한 시각, UTC
-       */
-      synched_at: string;
-
-      /**
-       * 서비스에 연결 완료된 시각, UTC
-       */
-      connected_at: string;
-
-      /**
-       * JSON 추가 정보
-       */
-      properties: Profile;
-    }
-
-    /**
-     * @see (프로필 정보)[https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#profile]
-     */
-
-    interface Profile {
-      /**
-       * 닉네임
-       */
-      nickname: string;
-
-      /**
-       * 프로필 미리보기 이미지 URL, 110px * 110px 또는 100px * 100px
-       */
-      thumbnail_image_url: string;
-
-      /**
-       * 프로필 이미지 URL, 640px * 640px 또는 480px * 480px
-       */
-      profile_image_url: string;
-
-      /**
-       * 프로필 사진 URL이 기본 프로필 사진 URL인지 여부
-       *
-       * 사용자가 등록한 프로필 사진이 없을 경우, 기본 프로필 사진 제공
-       *
-       * true: 기본 프로필 사진
-       *
-       * false: 사용자가 등록한 프로필 사진
-       */
-      is_default_image: boolean;
-    }
+    id: number;
 
     /**
      * 카카오계정 정보
-     * @see {@link https://developers.kakao.com/docs/latest/ko/kakaologin/common#kakaoaccount} 카카오계정 정보
-     * @see {@link https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#kakaoaccount} REST API
      */
-    interface KakaoAccount extends Record<string, any> {
-      /** 프로필 정보 */
-      profile: Profile;
-      /**
-       * 카카오계정 이름
-       */
-      name: string;
+    kakao_account: KakaoAccount;
 
-      /** 대표 이메일 */
-      email: string;
-      /**
-       * 연령대 ref: https://developers.kakao.com/docs/latest/ko/kakaologin/common#user-info
-       */
-      age_range: string;
-      /** 생일, MMDD 형식 */
-      birthday: string;
-      /** 태어난 해, YYYY 형식 */
-      birthyear: string;
-      /** 성별, female/male */
-      gender: 'female' | 'male';
-      /** 전화번호. 카카오톡에 등록된 전화번호 */
-      phone_number: string;
-      /** 연계정보. 암호화된 이용자 확인 값 */
-      ci: string;
+    /**
+     * 카카오싱크 간편가입을 통해 로그인한 시각, UTC
+     */
+    synched_at: string;
 
-      // @see (needs_agreement)[https://developers.kakao.com/docs/latest/ko/kakaologin/common#needs_agreement]
-      // ${FIELD_NAME}_needs_agreement는 사용자 정보 종류별로 포함되어 있는 키입니다. 앱에 사용 설정된 동의 항목에 한해 제공되며, 사용자 동의 필요 여부를 의미합니다.
-      // @see (kakao Dev Talk 질문)[https://devtalk.kakao.com/t/needs-agreement/79875]
-      // profile_needs_agreement?: boolean;
-      // email_needs_agreement?: boolean;
-      // phone_number_needs_agreement?: boolean;
-    }
+    /**
+     * 서비스에 연결 완료된 시각, UTC
+     */
+    connected_at: string;
 
-/**
- * @see [Kakao.API](https://developers.kakao.com/sdk/reference/js/release/Kakao.API.html)
- */
+    /**
+     * JSON 추가 정보
+     */
+    properties: Profile;
+  }
+
+  /**
+   * @see (프로필 정보)[https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#profile]
+   */
+
+  interface Profile {
+    /**
+     * 닉네임
+     */
+    nickname: string;
+
+    /**
+     * 프로필 미리보기 이미지 URL, 110px * 110px 또는 100px * 100px
+     */
+    thumbnail_image_url: string;
+
+    /**
+     * 프로필 이미지 URL, 640px * 640px 또는 480px * 480px
+     */
+    profile_image_url: string;
+
+    /**
+     * 프로필 사진 URL이 기본 프로필 사진 URL인지 여부
+     *
+     * 사용자가 등록한 프로필 사진이 없을 경우, 기본 프로필 사진 제공
+     *
+     * true: 기본 프로필 사진
+     *
+     * false: 사용자가 등록한 프로필 사진
+     */
+    is_default_image: boolean;
+  }
+
+  /**
+   * 카카오계정 정보
+   * @see {@link https://developers.kakao.com/docs/latest/ko/kakaologin/common#kakaoaccount} 카카오계정 정보
+   * @see {@link https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#kakaoaccount} REST API
+   */
+  interface KakaoAccount extends Record<string, any> {
+    /** 프로필 정보 */
+    profile: Profile;
+    /**
+     * 카카오계정 이름
+     */
+    name: string;
+
+    /** 대표 이메일 */
+    email: string;
+    /**
+     * 연령대 ref: https://developers.kakao.com/docs/latest/ko/kakaologin/common#user-info
+     */
+    age_range: string;
+    /** 생일, MMDD 형식 */
+    birthday: string;
+    /** 태어난 해, YYYY 형식 */
+    birthyear: string;
+    /** 성별, female/male */
+    gender: "female" | "male";
+    /** 전화번호. 카카오톡에 등록된 전화번호 */
+    phone_number: string;
+    /** 연계정보. 암호화된 이용자 확인 값 */
+    ci: string;
+
+    // @see (needs_agreement)[https://developers.kakao.com/docs/latest/ko/kakaologin/common#needs_agreement]
+    // ${FIELD_NAME}_needs_agreement는 사용자 정보 종류별로 포함되어 있는 키입니다. 앱에 사용 설정된 동의 항목에 한해 제공되며, 사용자 동의 필요 여부를 의미합니다.
+    // @see (kakao Dev Talk 질문)[https://devtalk.kakao.com/t/needs-agreement/79875]
+    // profile_needs_agreement?: boolean;
+    // email_needs_agreement?: boolean;
+    // phone_number_needs_agreement?: boolean;
+  }
+
+  /**
+   * @see [Kakao.API](https://developers.kakao.com/sdk/reference/js/release/Kakao.API.html)
+   */
   namespace API {
     /**
      * API를 호출하기 위해 사용한 리소스를 해제합니다.
      */
-    export function cleanup(): void;
+    function cleanup(): void;
 
     /**
      * 카카오 API를 호출할 수 있습니다.
      * @param settings API 호출과 관련된 설정을 key/value로 전달합니다.
      */
-    export function request(settings: RequestParams): Promise<void>;
+    function request(settings: RequestParams): Promise<void>;
 
-    export interface RequestParams {
+    interface RequestParams {
       /**
        * 호출할 API URL
        */
@@ -168,12 +167,10 @@
       always?: (response: UserInfo | ApiError) => void;
     }
 
-
-
     /**
      * @see {@link https://developers.kakao.com/docs/latest/ko/kakaologin/prerequisite#user-properties} 사용자 프로퍼티
      */
-    export interface UserProperties {
+    interface UserProperties {
       /**
        * 닉네임
        */
@@ -190,8 +187,6 @@
       thumbnail_image: string;
     }
 
-
-
     interface ApiError {
       code: number;
       msg: string;
@@ -203,7 +198,7 @@
      * 사용자가 앱에 로그인할 수 있도록 인가 코드를 요청하는 함수입니다. 인가 코드를 받을 수 있는 서버 개발이 필요합니다.
      * @param settings 인가 코드 요청과 관련된 설정을 key/value로 전달합니다.
      */
-    export function authorize(settings: AuthorizeParams): string;
+    function authorize(settings: AuthorizeParams): string;
 
     interface AuthorizeParams {
       /**
@@ -242,17 +237,17 @@
     /**
      * 로그인 버튼을 생성하기 위해 삽입한 iframe을 삭제하고 리소스를 해제합니다.
      */
-    export function cleanup(): void;
+    function cleanup(): void;
 
     /**
      * @return 사용중인 App Key
      */
-    export function getAppKey(): string;
+    function getAppKey(): string;
 
     /**
      * 카카오 로그인 버튼을 생성합니다.
      */
-    export function createLoginButton(
+    function createLoginButton(
       createLoginButtonParams: CreateLoginButtonParams
     ): void;
 
@@ -266,37 +261,37 @@
        * 로그인 버튼에 표시할 언어, "kr"|"en"
        * @defaultValue `"kr"`
        */
-      lang?: 'kr' | 'en';
+      lang?: "kr" | "en";
 
       /**
        * 로그인 버튼의 사이즈, "small"|"medium"|"large"
        * @defaultValue `"medium"`
        */
-      size?: 'small' | 'medium' | 'large';
+      size?: "small" | "medium" | "large";
     }
 
     /**
      * @return 사용 중인 액세스 토큰
      */
-    export function getAccessToken(): string;
+    function getAccessToken(): string;
 
     /**
      * @return 사용중인 App Key
      */
-    export function getAppKey(): string;
+    function getAppKey(): string;
 
     /**
      * 현재 로그인 상태를 반환합니다.
      * @param callback 로그인 상태를 받을 콜백 함수
      */
-    export function getStatusInfo(callback?: AuthStatusCallback): void;
+    function getStatusInfo(callback?: AuthStatusCallback): void;
 
     interface AuthStatusCallback {
       (statusObj: {
         /**
          * "connected" 또는 "not_connected"
          */
-        status: 'connected' | 'not_connected';
+        status: "connected" | "not_connected";
 
         /**
          * 로그인 상태일 때만 전달되는 사용자 정보
@@ -309,7 +304,7 @@
      * 사용자가 앱에 로그인할 수 있도록 로그인 팝업창을 띄우는 함수입니다. 사용자의 클릭 이벤트 이후에 호출되어야 브라우저에 의해 팝업이 차단되지 않습니다.
      * @param settings 로그인과 관련된 설정을 key/value로 전달합니다.
      */
-    export function login(settings: LoginParams): void;
+    function login(settings: LoginParams): void;
 
     interface LoginParams {
       /**
@@ -362,8 +357,8 @@
     /**
      * 로그인 성공시 토큰이 포함된 인증 관련 객체
      */
-    export interface AuthObj {
-      token_type: 'bearer';
+    interface AuthObj {
+      token_type: "bearer";
 
       /**
        * 사용자 액세스 토큰 값
@@ -399,7 +394,7 @@
     /**
      * 로그인 실패시 에러 객체
      */
-    export interface ErrorObj {
+    interface ErrorObj {
       /**
        * 에러 메시지
        */
@@ -415,15 +410,15 @@
      * 다른 계정으로 로그인할 수 있도록 로그인 팝업창을 띄우는 함수입니다. 사용자의 클릭 이벤트 이후에 호출되어야 브라우저에 의해 팝업이 차단되지 않습니다.
      * @param settings 로그인과 관련된 설정을 key/value로 전달합니다.
      */
-    export function loginForm(settings: LoginFormParams): void;
+    function loginForm(settings: LoginFormParams): void;
 
-    interface LoginFormParams extends Omit<LoginParams, 'throughTalk'> {}
+    interface LoginFormParams extends Omit<LoginParams, "throughTalk"> {}
 
     /**
      * 현재 로그인되어 있는 사용자를 로그아웃시키고, Access Token을 삭제합니다.
      * @param callback 로그아웃 후 호출할 콜백 함수
      */
-    export function logout(callback: LogoutCallback): void;
+    function logout(callback: LogoutCallback): void;
 
     interface LogoutCallback {
       (): void;
@@ -434,7 +429,7 @@
      * @param token 사용할 액세스 토큰
      * @param [persist=true] - 세션이 종료된 뒤에도 액세스 토큰을 사용할 수 있도록 로컬 스토리지 저장 여부
      */
-    export function setAccessToken(
+    function setAccessToken(
       token: string,
       /**
        * @defaultValue `true`
@@ -442,8 +437,6 @@
       persist?: boolean
     ): void;
   }
-
-
 }
 
-export = Kakao
+export = Kakao;
