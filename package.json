@@ -1,6 +1,6 @@
 {
   "name": "kakao-js-sdk",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "kakao javscript sdk for login, share, chat, etc.",
   "main": "index.js",
   "scripts": {
