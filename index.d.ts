@@ -306,7 +306,7 @@ declare namespace Kakao {
        * 대상 카카오톡 채널 홈 URL에 포함된 카카오톡 채널 공개 ID
        */
       channelPublicId: string;
-    });
+    }): void;
 
     /**
      * 카카오톡 채널 1:1 채팅을 시작합니다. 사용자의 클릭 이벤트 이후에 호출되어야 브라우저에 의해 팝업이 차단되지 않습니다.
@@ -317,7 +317,7 @@ declare namespace Kakao {
        * 대상 카카오톡 채널 홈 URL에 포함된 카카오톡 채널 공개 ID
        */
       channelPublicId: string;
-    });
+    }): void;
 
     /**
      * 카카오톡 채널과 관련된 리소스를 해제합니다.
@@ -348,7 +348,7 @@ declare namespace Kakao {
        * @defaultValue `false`
        */
       supportMultipleDensities?: boolean;
-    });
+    }): void;
 
     /**
      * 카카오톡 채널 1:1 채팅 버튼을 생성합니다.
@@ -392,7 +392,7 @@ declare namespace Kakao {
        * @defaultValue `false`
        */
       supportMultipleDensities?: boolean;
-    });
+    }): void;
   }
 
   interface ViaPoint {
@@ -440,7 +440,7 @@ declare namespace Kakao {
        * @defaultValue `katec`
        */
       coordType?: string;
-    });
+    }): void;
 
     /**
      * 카카오내비 앱으로 길 안내를 시작합니다. 모바일 기기에서만 동작합니다.
@@ -509,7 +509,7 @@ declare namespace Kakao {
        * 시작 좌표 x
        */
       viaPoints?: Array<ViaPoint>;
-    });
+    }): void;
   }
 
   interface FriendsPickerResponse {
@@ -576,7 +576,7 @@ declare namespace Kakao {
      * 한 명의 친구를 선택할 때 사용합니다.
      * @param settings 친구 피커와 관련된 설정을 key/value로 전달합니다.
      */
-    function selectFriend(settings: {
+    function selectFriend(settings?: {
       /**
        * 친구 피커 타이틀 영역에 표시될 텍스트
        * @defaultValue `"카카오톡 친구 선택"`
@@ -623,7 +623,7 @@ declare namespace Kakao {
      * 여러 명의 친구를 선택할 때 사용합니다.
      * @param settings 친구 피커와 관련된 설정을 key/value로 전달합니다.
      */
-    function selectFriends(settings: {
+    function selectFriends(settings?: {
       /**
        * 친구 피커 타이틀 영역에 표시될 텍스트
        * @defaultValue `"카카오톡 친구 선택"`
@@ -683,6 +683,364 @@ declare namespace Kakao {
        */
       returnUrl?: string;
     }): Promise<FriendsPickerResponse | PickerError>;
+  }
+
+  interface ButtonObject {
+    title: string;
+    link: LinkObject;
+  }
+
+  interface CommerceObject {
+    regularPrice: number;
+    discountPrice?: number | undefined;
+    discountRate?: number | undefined;
+    fixedDiscountPrice?: number | undefined;
+
+    currencyUnit?: string | undefined;
+    currencyUnitPosition?: number | undefined;
+    productName?: string | undefined;
+  }
+
+  interface ContentObject {
+    title: string;
+    imageUrl: string;
+    link: LinkObject;
+    imageWidth?: number | undefined;
+    imageHeight?: number | undefined;
+    description?: string | undefined;
+  }
+
+  interface ImageInfos {
+    original: {
+      url: string;
+      length: number;
+      content_type: string;
+      width: number;
+      height: number;
+    };
+  }
+
+  interface ItemContentObject {
+    /**
+     * 헤더 또는 프로필 영역에 출력될 텍스트
+     */
+    profileText?: string;
+
+    /**
+     * 프로필 영역에 출력될 이미지
+     */
+    profileImageUrl?: string;
+
+    /**
+     * 이미지 아이템의 제목
+     */
+    titleImageText?: string;
+
+    /**
+     * 이미지 아이템의 이미지
+     */
+    titleImageUrl?: string;
+
+    /**
+     * 이미지 아이템의 제목 아래에 회색 글씨로 출력되는 카테고리 정보
+     */
+    titleImageCategory?: string;
+
+    /**
+     * 각 텍스트 아이템 정보, 최대 5개의 아이템 지원
+     */
+    items?: Array<ItemObject>;
+
+    /**
+     * 주문금액, 결제금액 등 아이템 영역의 요약 정보 제목
+     */
+    sum?: string;
+
+    /**
+     * 아이템 영역의 가격 합산 정보
+     */
+    sumOp?: string;
+  }
+
+  interface ItemObject {
+    /**
+     * 아이템 이름
+     */
+    item: string;
+
+    /**
+     * 아이템 가격
+     */
+    itemOp: string;
+  }
+
+  interface LinkObject {
+    webUrl?: string | undefined;
+    mobileWebUrl?: string | undefined;
+    androidExecParams?: string | undefined;
+    iosExecParams?: string | undefined;
+  }
+
+  interface SocialObject {
+    likeCount?: number | undefined;
+    commentCount?: number | undefined;
+    sharedCount?: number | undefined;
+    viewCount?: number | undefined;
+    subscriberCount?: number | undefined;
+  }
+
+  //
+  interface DefaultSettings<ObjectType extends string> {
+    objectType: ObjectType;
+    buttonTitle?: string | undefined;
+    buttons?: ButtonObject[] | undefined;
+    installTalk?: boolean | undefined;
+    callback?: (...args: any[]) => any;
+    serverCallbackArgs?: KeyValue | string | undefined;
+  }
+
+  type OneOfSettings =
+    | DefaultFeedSettings
+    | DefaultListSettings
+    | DefaultLocationSettings
+    | DefaultCommerceSettings
+    | DefaultTextSettings;
+
+  interface DefaultFeedSettings extends DefaultSettings<"feed"> {
+    content: ContentObject;
+    itemContent?: ItemContentObject | undefined;
+    social?: SocialObject | undefined;
+  }
+
+  interface DefaultListSettings extends DefaultSettings<"list"> {
+    headerTitle: string;
+    headerLink: LinkObject;
+    contents: ContentObject[];
+  }
+
+  interface DefaultLocationSettings extends DefaultSettings<"location"> {
+    content: ContentObject;
+    address: string;
+    addressTitle?: string | undefined;
+    social?: SocialObject | undefined;
+  }
+
+  interface DefaultCommerceSettings extends DefaultSettings<"commerce"> {
+    content: ContentObject;
+    commerce: CommerceObject;
+  }
+
+  interface DefaultTextSettings extends DefaultSettings<"text"> {
+    text: string;
+    link: LinkObject;
+  }
+
+  /**
+   * 카카오톡 공유와 관련된 함수들이 포함되어 있습니다.
+   * @see [Kakao.Share](https://developers.kakao.com/sdk/reference/js/release/Kakao.Share.html#.addChannel)
+   */
+  namespace Share {
+    /**
+     * 카카오톡 공유와 관련된 리소스를 해제합니다.
+     */
+    function cleanup(): void;
+
+    //
+
+    /**
+     * 메시지 템플릿을 이용하여 카카오톡 공유를 하는 기능입니다. [메시지 템플릿 가이드로 이동](https://developers.kakao.com/docs/latest/ko/message/message-template)
+     * @param settings 카카오톡 공유와 관련된 설정을 key/value로 전달합니다.
+     */
+    function createCustomButton(settings: {
+      /**
+       * DOM Element 또는 Element의 ID Selector를 넘기면, 해당 Element를 클릭할 때 카카오톡 공유가 됩니다.
+       */
+      container: string | HTMLElement;
+
+      /**
+       * 메시지 템플릿 아이디, [내 애플리케이션 > 메시지 > 메시지 템플릿]에서 확인
+       */
+      templateId: number;
+
+      /**
+       * 메시지 템플릿에서 활용할 arguments, ex) {'name':'kakao', 'url':'https://developers.kakao.com'}
+       */
+      templateArgs?: KeyValue;
+
+      /**
+       * 카카오톡이 설치되어 있지 않은 경우 마켓의 카카오톡 설치 페이지로 이동
+       * @defaultValue `false`
+       */
+      installTalk?: boolean;
+
+      /**
+       * 데스크톱 환경에서 카카오톡 공유를 완료했을 때 호출되는 콜백 함수 (IE 미지원)
+       */
+      callback?: (...args: any[]) => any;
+
+      /**
+       * 카카오톡 공유 시 전송되는 알림에 포함되는 파라미터 ([전송 성공 알림 설정하기](https://developers.kakao.com/docs/latest/ko/message/js-link#set-kakaolink-callback))
+       */
+      serverCallbackArgs?: KeyValue | string;
+    }): void;
+
+    /**
+     * 기본 템플릿 타입 (Feed, List, Location, Commerce, Text)에 따라 메시지를 구성하여 카카오톡 공유를 하는 기능입니다.
+     * @param settings 카카오톡 공유와 관련된 설정을 key/value로 전달합니다.
+     */
+    function createDefaultButton(
+      settings: { container: string | HTMLElement } & OneOfSettings
+    ): void;
+
+    /**
+     * 사이트의 메타 정보를 활용하여 카카오톡 공유를 하는 기능입니다.
+     * @param settings 카카오톡 공유와 관련된 설정을 key/value로 전달합니다.
+     */
+    function createScrapButton(settings: {
+      /**
+       * DOM Element 또는 Element의 ID Selector를 넘기면, 해당 Element를 클릭할 때 카카오톡 공유가 됩니다.
+       */
+      container: string | HTMLElement;
+
+      /**
+       * 스크랩할 사이트 URL, 해당 사이트의 메타 정보를 토대로 메시지 생성
+       */
+      requestUrl: string;
+
+      /**
+       * 메시지 템플릿 아이디, [내 애플리케이션 > 메시지 > 메시지 템플릿]에서 확인
+       */
+      templateId?: number;
+
+      /**
+       * 메시지 템플릿에서 활용할 arguments, ex) {'name':'kakao', 'url':'https://developers.kakao.com'}
+       */
+      templateArgs?: KeyValue;
+
+      /**
+       * 카카오톡이 설치되어 있지 않은 경우 마켓의 카카오톡 설치 페이지로 이동
+       * @defaultValue `false`
+       */
+      installTalk?: boolean;
+
+      /**
+       * 데스크톱 환경에서 카카오톡 공유를 완료했을 때 호출되는 콜백 함수 (IE 미지원)
+       */
+      callback?: (...args: any[]) => any;
+
+      /**
+       * 카카오톡 공유 시 전송되는 알림에 포함되는 파라미터 ([전송 성공 알림 설정하기](https://developers.kakao.com/docs/latest/ko/message/js-link#set-kakaolink-callback))
+       */
+      serverCallbackArgs?: KeyValue | string;
+    }): void;
+
+    /**
+     * 업로드된 이미지의 경로를 전달하면 이미지를 삭제할 수 있습니다.
+     * @param settings 이미지와 관련된 설정을 key/value로 전달합니다.
+     */
+    function deleteImage(settings: {
+      /**
+       * 삭제할 이미지 URL
+       */
+      imageUrl: string;
+    }): Promise<void>;
+
+    /**
+     * 스크랩하고 싶은 이미지의 경로를 전달하면 스크랩 후 업로드합니다. (이미지는 20일 동안 보관됩니다.)
+     * @param settings 이미지와 관련된 설정을 key/value로 전달합니다.
+     */
+    function scrapImage(settings: {
+      /**
+       * 삭제할 이미지 URL
+       */
+      imageUrl: string;
+    }): Promise<ImageInfos>;
+
+    /**
+     * 메시지 템플릿을 이용하여 카카오톡 공유를 하는 기능입니다. [메시지 템플릿 가이드로 이동](https://developers.kakao.com/docs/latest/ko/message/message-template)
+     * @param settings 카카오톡 공유와 관련된 설정을 key/value로 전달합니다.
+     */
+    function sendCustom(settings: {
+      /**
+       * 메시지 템플릿 아이디, [내 애플리케이션 > 메시지 > 메시지 템플릿]에서 확인
+       */
+      templateId: number;
+
+      /**
+       * 메시지 템플릿에서 활용할 arguments, ex) {'name':'kakao', 'url':'https://developers.kakao.com'}
+       */
+      templateArgs?: KeyValue;
+
+      /**
+       * 카카오톡이 설치되어 있지 않은 경우 마켓의 카카오톡 설치 페이지로 이동
+       * @defaultValue `false`
+       */
+      installTalk?: boolean;
+
+      /**
+       * 데스크톱 환경에서 카카오톡 공유를 완료했을 때 호출되는 콜백 함수 (IE 미지원)
+       */
+      callback?: (...args: any[]) => any;
+
+      /**
+       * 카카오톡 공유 시 전송되는 알림에 포함되는 파라미터 ([전송 성공 알림 설정하기](https://developers.kakao.com/docs/latest/ko/message/js-link#set-kakaolink-callback))
+       */
+      serverCallbackArgs?: KeyValue | string;
+    }): void;
+
+    /**
+     * 기본 템플릿 타입 (Feed, List, Location, Commerce, Text)에 따라 메시지를 구성하여 카카오톡 공유를 하는 기능입니다.
+     * @param settings 카카오톡 공유와 관련된 설정을 key/value로 전달합니다.
+     */
+    function sendDefault(settings: OneOfSettings): void;
+
+    /**
+     * 사이트의 메타 정보를 활용하여 카카오톡 공유를 하는 기능입니다.
+     * @param settings 카카오톡 공유와 관련된 설정을 key/value로 전달합니다.
+     */
+    function sendScrap(settings: {
+      /**
+       * 스크랩할 사이트 URL, 해당 사이트의 메타 정보를 토대로 메시지 생성
+       */
+      requestUrl: string;
+
+      /**
+       * 메시지 템플릿 아이디, [내 애플리케이션 > 메시지 > 메시지 템플릿]에서 확인
+       */
+      templateId?: number;
+
+      /**
+       * 메시지 템플릿에서 활용할 arguments, ex) {'name':'kakao', 'url':'https://developers.kakao.com'}
+       */
+      templateArgs?: KeyValue;
+
+      /**
+       * 카카오톡이 설치되어 있지 않은 경우 마켓의 카카오톡 설치 페이지로 이동
+       * @defaultValue `false`
+       */
+      installTalk?: boolean;
+
+      /**
+       * 데스크톱 환경에서 카카오톡 공유를 완료했을 때 호출되는 콜백 함수 (IE 미지원)
+       */
+      callback?: (...args: any[]) => any;
+
+      /**
+       * 카카오톡 공유 시 전송되는 알림에 포함되는 파라미터 ([전송 성공 알림 설정하기](https://developers.kakao.com/docs/latest/ko/message/js-link#set-kakaolink-callback))
+       */
+      serverCallbackArgs?: KeyValue | string;
+    }): void;
+
+    /**
+     * 카카오톡 공유에 필요한 이미지를 업로드 합니다. (이미지는 20일 동안 보관됩니다.)
+     * @param settings 이미지와 관련된 설정을 key/value로 전달합니다.
+     */
+    function uploadImage(settings: {
+      /**
+       * HTMLInputElement의 files property
+       */
+      file: FileList;
+    }): Promise<ImageInfos>;
   }
 }
 
