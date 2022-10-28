@@ -1,6 +1,6 @@
 {
   "name": "kakao-js-sdk",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Kakao SDK for JavaScript",
   "main": "index.js",
   "scripts": {
@@ -25,10 +25,6 @@
   ],
   "author": "Wooseok Yang",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/woosuk288/kakao-js-sdk"
-  },
   "devDependencies": {
     "typescript": "^4.8.4"
   }
