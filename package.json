@@ -1,14 +1,29 @@
 {
   "name": "kakao-js-sdk",
-  "version": "1.0.4",
-  "description": "kakao javscript sdk for login, share, chat, etc.",
+  "version": "1.0.6",
+  "description": "Kakao SDK for JavaScript",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "kakao",
+    "js",
+    "javascript",
+    "login",
+    "share",
+    "chat",
+    "auth",
+    "api",
+    null,
+    "sdk"
+  ],
+  "author": "Wooseok Yang",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/woosuk288/kakao-js-sdk"
+  },
   "devDependencies": {
     "typescript": "^4.8.4"
   }
