@@ -176,6 +176,7 @@ declare namespace Kakao {
   }
 
   /**
+   * 카카오 API와 관련된 함수들이 포함되어 있습니다.
    * @see [Kakao.API](https://developers.kakao.com/sdk/reference/js/release/Kakao.API.html)
    */
   namespace API {
@@ -210,6 +211,7 @@ declare namespace Kakao {
   }
 
   /**
+   * 사용자 인증과 관련된 함수들이 포함되어 있습니다.
    * @see [Kakao.Auth](https://developers.kakao.com/sdk/reference/js/release/Kakao.Auth.html)
    */
   namespace Auth {
@@ -293,6 +295,7 @@ declare namespace Kakao {
   }
 
   /**
+   * 카카오톡 채널 플러그인과 관련된 함수들이 포함되어 있습니다.
    * @see [Kakao.Channel](https://developers.kakao.com/sdk/reference/js/release/Kakao.Channel.html#.addChannel)
    */
   namespace Channel {
@@ -391,6 +394,123 @@ declare namespace Kakao {
        * @defaultValue `false`
        */
       supportMultipleDensities?: boolean;
+    });
+  }
+
+  interface ViaPoint {
+    /**
+     * 목적지 이름
+     */
+    name: string;
+    /**
+     * 목적지의 x 좌표 (경도). wgs84 또는 katec 좌표계의 값
+     */
+    x: string;
+
+    /**
+     * 목적지의 y 좌표 (위도). wgs84 또는 katec 좌표계의 값
+     */
+    y: string;
+  }
+
+  /**
+   * 카카오내비 앱을 통해 목적지 공유 및 길 안내 기능을 실행합니다. 카카오내비 앱이 설치돼 있다면 앱, 그렇지 않다면 설치 페이지를 엽니다.
+   * @see [Kakao.Navi](https://developers.kakao.com/sdk/reference/js/release/Kakao.Navi.html#.addChannel)
+   */
+  namespace Navi {
+    /**
+     * 카카오내비 앱으로 목적지를 공유합니다. 모바일 기기에서만 동작합니다.
+     * @param settings 카카오내비 앱을 실행할 때의 옵션
+     */
+    function share(settings: {
+      /**
+       * 목적지 이름
+       */
+      name: string;
+      /**
+       * 목적지의 x 좌표 (경도). wgs84 또는 katec 좌표계의 값
+       */
+      x: string;
+
+      /**
+       * 목적지의 y 좌표 (위도). wgs84 또는 katec 좌표계의 값
+       */
+      y: string;
+
+      /**
+       * 좌표 타입, "wgs84"|"katec"
+       * @defaultValue `katec`
+       */
+      coordType?: string;
+    });
+
+    /**
+     * 카카오내비 앱으로 길 안내를 시작합니다. 모바일 기기에서만 동작합니다.
+     * @param settings 카카오내비 앱을 실행할 때의 옵션
+     */
+    function start(settings: {
+      /**
+       * 목적지 이름
+       */
+      name: string;
+      /**
+       * 목적지의 x 좌표 (경도). wgs84 또는 katec 좌표계의 값
+       */
+      x: string;
+
+      /**
+       * 목적지의 y 좌표 (위도). wgs84 또는 katec 좌표계의 값
+       */
+      y: string;
+
+      /**
+       * 좌표 타입, "wgs84"|"katec"
+       * @defaultValue `katec`
+       */
+      coordType?: string;
+
+      /**
+       * 차종 (1: 1종 (승용차/소형승합차/소형화물화), 2: 2종 (중형승합차/중형화물차), 3: 3종 (대형승합차/2축 대형화물차), 4: 4종 (3축 대형화물차), 5: 5종 (4축이상 특수화물차), 6: 6종 (경차), 7: 이륜차)
+       * @defaultValue `1`
+       */
+      vehicleType?: number;
+
+      /**
+       * 경로 옵션 (1: 가장 빠른 경로, 2: 무료 도로, 3: 가장 짧은 경로, 4: 자동차 전용 도로 제외, 5: 큰길 우선, 6: 고속도로 우선, 8: 일반 도로 우선, 100: 추천 경로)
+       * @defaultValue `100`
+       */
+      rpOption?: number;
+
+      /**
+       * 전체 경로 보기 여부
+       * @defaultValue `false`
+       */
+      routeInfo?: boolean;
+
+      /**
+       * 시작 좌표 x
+       */
+      sX?: number;
+
+      /**
+       * 시작 좌표 y
+       */
+      sY?: number;
+
+      /**
+       * 시작 앵글 (0~359)
+       */
+      sAngle?: number;
+
+      /**
+       * 경유지 정보 (최대 3개)
+       */
+      returnUri?: number;
+
+      /**
+       * 시작 좌표 x
+       */
+      viaPoints?: Array<ViaPoint>;
     });
   }
 }
