@@ -513,6 +513,179 @@ declare namespace Kakao {
       viaPoints?: Array<ViaPoint>;
     });
   }
+
+  interface FriendsPickerResponse {
+    /**
+     * 피커에서 선택한 친구 수
+     */
+    selectedTotalCount: number;
+
+    /**
+     * 피커에서 선택한 친구 정보
+     */
+    users: Array<SelectedUser>;
+  }
+
+  interface PickerError {
+    /**
+     * 에러 코드
+     */
+    code: number;
+    /**
+     * 에러 메시지
+     */
+    msg: string;
+  }
+
+  interface SelectedUser {
+    /**
+     * 고유 식별자
+     */
+    uuid: string;
+
+    /**
+     * 회원번호
+     */
+    id?: string;
+
+    /**
+     * 프로필 닉네임
+     */
+    profile_nickname?: string;
+
+    /**
+     * 프로필 썸네일 이미지
+     */
+    profile_thumbnail_image?: string;
+
+    /**
+     * 즐겨찾기 설정 여부
+     */
+    favorite?: boolean;
+  }
+
+  /**
+   * 피커와 관련된 함수들이 포함되어 있습니다.
+   * @see [Kakao.Picker](https://developers.kakao.com/sdk/reference/js/release/Kakao.Picker.html#.addChannel)
+   */
+  namespace Picker {
+    /**
+     * 피커를 호출하기 위해 사용한 리소스를 해제합니다.
+     */
+    function cleanup(): void;
+
+    /**
+     * 한 명의 친구를 선택할 때 사용합니다.
+     * @param settings 친구 피커와 관련된 설정을 key/value로 전달합니다.
+     */
+    function selectFriend(settings: {
+      /**
+       * 친구 피커 타이틀 영역에 표시될 텍스트
+       * @defaultValue `"카카오톡 친구 선택"`
+       */
+      title?: string;
+
+      /**
+       * 검색 기능 사용 여부
+       * @defaultValue `true`
+       */
+      enableSearch?: boolean;
+
+      /**
+       * 내 프로필 표시 여부
+       * @defaultValue `true`
+       */
+      showMyProfile?: boolean;
+
+      /**
+       * 즐겨찾기 표시 여부
+       * @defaultValue `true`
+       */
+      showFavorite?: boolean;
+
+      /**
+       * [검수 필요] 친구 관계 유형 (카카오톡/카카오스토리/카카오톡 & 카카오스토리), "talk"|"story"|"talkstory"
+       * @defaultValue `"talk"`
+       */
+      serviceTypeFilter?: string;
+
+      /**
+       * 뒤로가기 버튼 노출 유무
+       * @defaultValue `true`
+       */
+      enableBackButton?: boolean;
+
+      /**
+       * 선택한 친구 정보를 받을 서비스 URL (리다이렉트 방식 사용 시 필수)
+       */
+      returnUrl?: string;
+    }): Promise<FriendsPickerResponse | PickerError>;
+
+    /**
+     * 여러 명의 친구를 선택할 때 사용합니다.
+     * @param settings 친구 피커와 관련된 설정을 key/value로 전달합니다.
+     */
+    function selectFriends(settings: {
+      /**
+       * 친구 피커 타이틀 영역에 표시될 텍스트
+       * @defaultValue `"카카오톡 친구 선택"`
+       */
+      title?: string;
+
+      /**
+       * 검색 기능 사용 여부
+       * @defaultValue `true`
+       */
+      enableSearch?: boolean;
+
+      /**
+       * 내 프로필 표시 여부
+       * @defaultValue `true`
+       */
+      showMyProfile?: boolean;
+
+      /**
+       * 즐겨찾기 표시 여부
+       * @defaultValue `true`
+       */
+      showFavorite?: boolean;
+
+      /**
+       * 선택된 친구 표시 여부
+       * @defaultValue `true`
+       */
+      showPickedFriend?: boolean;
+
+      /**
+       * 최대 선택 가능 친구 수 (최대 100명)
+       * @defaultValue `30`
+       */
+      maxPickableCount?: number;
+
+      /**
+       * 최소 선택 가능 친구 수 (최대 100명)
+       * @defaultValue `1`
+       */
+      minPickableCount?: number;
+
+      /**
+       * [검수 필요] 친구 관계 유형 (카카오톡/카카오스토리/카카오톡 & 카카오스토리), "talk"|"story"|"talkstory"
+       * @defaultValue `"talk"`
+       */
+      serviceTypeFilter?: string;
+
+      /**
+       * 뒤로가기 버튼 노출 유무
+       * @defaultValue `true`
+       */
+      enableBackButton?: boolean;
+
+      /**
+       * 선택한 친구 정보를 받을 서비스 URL (리다이렉트 방식 사용 시 필수)
+       */
+      returnUrl?: string;
+    }): Promise<FriendsPickerResponse | PickerError>;
+  }
 }
 
 export = Kakao;
