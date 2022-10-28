@@ -24,17 +24,15 @@ declare namespace Kakao {
   }
 
   interface StatusResponse {
-    (statusObj: {
-      /**
-       * "connected" 또는 "not_connected"
-       */
-      status: "connected" | "not_connected";
+    /**
+     * "connected" 또는 "not_connected"
+     */
+    status: "connected" | "not_connected";
 
-      /**
-       * 로그인 상태일 때만 전달되는 사용자 정보
-       */
-      user: UserInfo;
-    }): void;
+    /**
+     * 로그인 상태일 때만 전달되는 사용자 정보
+     */
+    user: UserInfo;
   }
 
   interface AuthError {
@@ -219,7 +217,7 @@ declare namespace Kakao {
      * 사용자가 앱에 로그인할 수 있도록 인가 코드를 요청하는 함수입니다. 인가 코드를 받을 수 있는 서버 개발이 필요합니다.
      * @param settings 인가 코드 요청과 관련된 설정을 key/value로 전달합니다.
      */
-    function authorize(settings: {
+    function authorize(settings?: {
       /**
        *  인가 코드를 받을 URI
        */
