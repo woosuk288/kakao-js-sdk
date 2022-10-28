@@ -291,6 +291,108 @@ declare namespace Kakao {
       persist?: boolean
     ): void;
   }
+
+  /**
+   * @see [Kakao.Channel](https://developers.kakao.com/sdk/reference/js/release/Kakao.Channel.html#.addChannel)
+   */
+  namespace Channel {
+    /**
+     * 카카오톡 채널 추가 팝업창을 띄웁니다. 사용자의 클릭 이벤트 이후에 호출되어야 브라우저에 의해 팝업이 차단되지 않습니다.
+     * @param settings 카카오톡 채널 추가와 관련된 설정을 key/value로 전달합니다.
+     */
+    function addChannel(settings: {
+      /**
+       * 대상 카카오톡 채널 홈 URL에 포함된 카카오톡 채널 공개 ID
+       */
+      channelPublicId: string;
+    });
+
+    /**
+     * 카카오톡 채널 1:1 채팅을 시작합니다. 사용자의 클릭 이벤트 이후에 호출되어야 브라우저에 의해 팝업이 차단되지 않습니다.
+     * @param settings 카카오톡 채널 추가와 관련된 설정을 key/value로 전달합니다.
+     */
+    function chat(settings: {
+      /**
+       * 대상 카카오톡 채널 홈 URL에 포함된 카카오톡 채널 공개 ID
+       */
+      channelPublicId: string;
+    });
+
+    /**
+     * 카카오톡 채널과 관련된 리소스를 해제합니다.
+     */
+    function cleanup(): void;
+
+    /**
+     * 카카오톡 채널 추가 버튼을 생성합니다.
+     * @param settings 카카오톡 채널 추가 버튼 생성과 관련된 설정을 key/value로 전달합니다.
+     */
+    function createAddChannelButton(settings: {
+      /**
+       * DOM Element 또는 Element의 ID Selector
+       */
+      container: string | HTMLElement;
+      /**
+       * 대상 카카오톡 채널 홈 URL에 포함된 카카오톡 채널 공개 ID
+       */
+      channelPublicId: string;
+      /**
+       * 채널추가 버튼의 사이즈, "small"|"large"
+       * @defaultValue `small`
+       */
+      size?: string;
+
+      /**
+       * 화면 배율에 따라 2x 3x 이미지를 사용, IE 미지원
+       * @defaultValue `false`
+       */
+      supportMultipleDensities?: boolean;
+    });
+
+    /**
+     * 카카오톡 채널 1:1 채팅 버튼을 생성합니다.
+     * @param settings 카카오톡 채널 1:1 채팅 버튼 생성과 관련된 설정을 key/value로 전달합니다.
+     */
+    function createChatButton(settings: {
+      /**
+       * DOM Element 또는 Element의 ID Selector
+       */
+      container: string | HTMLElement;
+      /**
+       * 대상 카카오톡 채널 홈 URL에 포함된 카카오톡 채널 공개 ID
+       */
+      channelPublicId: string;
+      /**
+       * 1:1 채팅 버튼에 들어갈 제목, "consult"|"question"
+       * @defaultValue `consult`
+       */
+      title?: string;
+
+      /**
+       * 채널추가 버튼의 사이즈, "small"|"large"
+       * @defaultValue `small`
+       */
+      size?: string;
+
+      /**
+       * 1:1 채팅 버튼의 배경색, "yellow"|"black"
+       * @defaultValue `yellow`
+       */
+      color?: string;
+
+      /**
+       * 1:1 채팅 버튼의 모양, "pc"|"mobile"
+       * @defaultValue `pc`
+       */
+      shape?: string;
+
+      /**
+       * 화면 배율에 따라 2x 3x 이미지를 사용, IE 미지원
+       * @defaultValue `false`
+       */
+      supportMultipleDensities?: boolean;
+    });
+  }
 }
 
 export = Kakao;
