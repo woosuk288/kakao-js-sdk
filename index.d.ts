@@ -294,7 +294,7 @@ declare namespace Kakao {
 
   /**
    * 카카오톡 채널 플러그인과 관련된 함수들이 포함되어 있습니다.
-   * @see [Kakao.Channel](https://developers.kakao.com/sdk/reference/js/release/Kakao.Channel.html#.addChannel)
+   * @see [Kakao.Channel](https://developers.kakao.com/sdk/reference/js/release/Kakao.Channel.html)
    */
   namespace Channel {
     /**
@@ -413,7 +413,7 @@ declare namespace Kakao {
 
   /**
    * 카카오내비 앱을 통해 목적지 공유 및 길 안내 기능을 실행합니다. 카카오내비 앱이 설치돼 있다면 앱, 그렇지 않다면 설치 페이지를 엽니다.
-   * @see [Kakao.Navi](https://developers.kakao.com/sdk/reference/js/release/Kakao.Navi.html#.addChannel)
+   * @see [Kakao.Navi](https://developers.kakao.com/sdk/reference/js/release/Kakao.Navi.html)
    */
   namespace Navi {
     /**
@@ -564,7 +564,7 @@ declare namespace Kakao {
 
   /**
    * 피커와 관련된 함수들이 포함되어 있습니다.
-   * @see [Kakao.Picker](https://developers.kakao.com/sdk/reference/js/release/Kakao.Picker.html#.addChannel)
+   * @see [Kakao.Picker](https://developers.kakao.com/sdk/reference/js/release/Kakao.Picker.html)
    */
   namespace Picker {
     /**
@@ -837,15 +837,13 @@ declare namespace Kakao {
 
   /**
    * 카카오톡 공유와 관련된 함수들이 포함되어 있습니다.
-   * @see [Kakao.Share](https://developers.kakao.com/sdk/reference/js/release/Kakao.Share.html#.addChannel)
+   * @see [Kakao.Share](https://developers.kakao.com/sdk/reference/js/release/Kakao.Share.html)
    */
   namespace Share {
     /**
      * 카카오톡 공유와 관련된 리소스를 해제합니다.
      */
     function cleanup(): void;
-
-    //
 
     /**
      * 메시지 템플릿을 이용하여 카카오톡 공유를 하는 기능입니다. [메시지 템플릿 가이드로 이동](https://developers.kakao.com/docs/latest/ko/message/message-template)
@@ -1041,6 +1039,134 @@ declare namespace Kakao {
        */
       file: FileList;
     }): Promise<ImageInfos>;
+  }
+
+  /**
+   * 카카오스토리 플러그인들과 관련된 함수들이 포함되어 있습니다.
+   * @see [Kakao.Story](https://developers.kakao.com/sdk/reference/js/release/Kakao.Story.html)
+   */
+  namespace Story {
+    /**
+     * 카카오스토리 공유 버튼과 관련된 리소스를 해제합니다.
+     */
+    function cleanup(): void;
+
+    /**
+     * 지정한 Element를 클릭할 때 카카오스토리 채널로부터 소식을 받도록 합니다.
+     * @param settings 카카오스토리 소식받기 버튼과 관련된 설정을 key/value로 전달합니다.
+     */
+    function createFollowButton(settings: {
+      /**
+       * DOM Element 또는 Element의 ID Selector를 넘기면, 해당 Element를 클릭할 때 지정한 채널을 구독합니다.
+       */
+      container: string | HTMLElement;
+
+      /**
+       * 소식을 받을 카카오스토리 채널 ID. ex) kakao
+       */
+      id: string;
+
+      /**
+       * 구독자 수를 노출합니다.
+       * @defaultValue `true`
+       */
+      showFollowerCount?: boolean;
+
+      /**
+       * 구독자 수를 노출할 형태를 정합니다.
+       * @defaultValue `"horizontal"`
+       */
+      type?: string;
+    }): void;
+
+    /**
+     * 지정한 Element를 클릭할 때 카카오스토리 공유 창이 열리도록 합니다.
+     * @param settings 카카오스토리 공유 버튼과 관련된 설정을 key/value로 전달합니다.
+     */
+    function createShareButton(settings: {
+      /**
+       * DOM Element 또는 Element의 ID Selector를 넘기면, 해당 Element를 클릭할 때 지정한 채널을 구독합니다.
+       */
+      container: string | HTMLElement;
+
+      /**
+       * 카카오스토리로 공유할 웹 페이지의 URL.
+       * @defaultValue `${current page's URL}`
+       */
+      url?: string;
+
+      /**
+       * 공유 창에 표시할 텍스트
+       * @defaultValue `""`
+       */
+      text?: string;
+    }): void;
+
+    /**
+     * 모바일 환경에서 카카오스토리 앱 공유 화면을 엽니다.
+     * @param settings 카카오스토리 공유 버튼과 관련된 설정을 key/value로 전달합니다.
+     */
+    function open(settings: {
+      /**
+       * 카카오스토리 앱이 설치되어 있지 않은 경우 마켓의 카카오스토리 설치 페이지로 이동합니다.
+       * @defaultValue `false`
+       */
+      install?: boolean;
+
+      /**
+       * 카카오스토리로 공유할 웹 페이지의 URL.
+       * @defaultValue `${current page's URL}`
+       */
+      url?: string;
+
+      /**
+       * 공유 창에 표시할 텍스트
+       * @defaultValue `""`
+       */
+      text?: string;
+
+      /**
+       * 위에 입력한 url에 대한 추가적인 정보 (입력하지 않을 경우 스크랩 서버가 자동으로 생성)
+       */
+      urlInfo?:
+        | {
+            /**
+             * 스크랩 영역에 표시할 제목
+             */
+            title: string;
+            /**
+             * 스크랩 영역에 표시할 설명
+             */
+            desc?: string | undefined;
+            /**
+             * 스크랩 영역에 표시할 사이트 이름
+             */
+            name?: string | undefined;
+            /**
+             * 스크랩 영역에 표시할 대표 이미지 URL
+             */
+            images?: string[] | undefined;
+          }
+        | undefined;
+    }): void;
+
+    /**
+     * 카카오스토리 웹 공유 창을 엽니다.
+     * @param settings 카카오스토리 공유 버튼과 관련된 설정을 key/value로 전달합니다.
+     */
+    function share(settings: {
+      /**
+       * 카카오스토리로 공유할 웹 페이지의 URL.
+       * @defaultValue `${current page's URL}`
+       */
+      url?: string;
+
+      /**
+       * 공유 창에 표시할 텍스트
+       * @defaultValue `""`
+       */
+      text?: string;
+    }): void;
   }
 }
 
