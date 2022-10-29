@@ -19,10 +19,6 @@ declare namespace Kakao {
    */
   function isInitialized(): boolean;
 
-  interface KeyValue {
-    [key: string]: any;
-  }
-
   interface StatusResponse {
     /**
      * "connected" 또는 "not_connected"
@@ -199,13 +195,13 @@ declare namespace Kakao {
        * API에 전달할 파라미터
        * @see (data: 사용자 정보 가져오기) [https://developers.kakao.com/docs/latest/ko/kakaologin/js#req-user-info-data]
        */
-      data?: KeyValue;
+      data?: { [key: string]: any };
 
       /**
        * 파일 첨부가 필요한 API에서 이용하는 파일 파라미터
        */
       files?: FileList | Array<File> | Array<Blob>;
-    }): Promise<KeyValue>;
+    }): Promise<{ [key: string]: any }>;
   }
 
   /**
@@ -269,14 +265,16 @@ declare namespace Kakao {
     /**
      * 현재 로그인 상태를 반환합니다.
      * @param callback 로그인 상태를 받을 콜백 함수
+     * @throws {AuthError}
      */
-    function getStatusInfo(): Promise<StatusResponse | AuthError>;
+    function getStatusInfo(): Promise<StatusResponse>;
 
     /**
      * 현재 로그인되어 있는 사용자를 로그아웃시키고, 액세스 토큰을 삭제합니다.
      * @param callback 로그아웃 후 호출할 콜백 함수
+     * @throws {AuthError}
      */
-    function logout(): Promise<LogoutResponse | AuthError>;
+    function logout(): Promise<LogoutResponse>;
 
     /**
      * API 호출 시 사용할 액세스 토큰을 설정합니다.
@@ -575,6 +573,7 @@ declare namespace Kakao {
     /**
      * 한 명의 친구를 선택할 때 사용합니다.
      * @param settings 친구 피커와 관련된 설정을 key/value로 전달합니다.
+     * @throws {PickerError}
      */
     function selectFriend(settings?: {
       /**
@@ -617,11 +616,12 @@ declare namespace Kakao {
        * 선택한 친구 정보를 받을 서비스 URL (리다이렉트 방식 사용 시 필수)
        */
       returnUrl?: string;
-    }): Promise<FriendsPickerResponse | PickerError>;
+    }): Promise<FriendsPickerResponse>;
 
     /**
      * 여러 명의 친구를 선택할 때 사용합니다.
      * @param settings 친구 피커와 관련된 설정을 key/value로 전달합니다.
+     * @throws {PickerError}
      */
     function selectFriends(settings?: {
       /**
@@ -682,7 +682,7 @@ declare namespace Kakao {
        * 선택한 친구 정보를 받을 서비스 URL (리다이렉트 방식 사용 시 필수)
        */
       returnUrl?: string;
-    }): Promise<FriendsPickerResponse | PickerError>;
+    }): Promise<FriendsPickerResponse>;
   }
 
   /**
@@ -902,7 +902,7 @@ declare namespace Kakao {
     /**
      * 카카오톡 공유 시 전송되는 알림에 포함되는 파라미터 ([전송 성공 알림 설정하기](https://developers.kakao.com/docs/latest/ko/message/js-link#set-kakaolink-callback))
      */
-    serverCallbackArgs?: KeyValue | string | undefined;
+    serverCallbackArgs?: { [key: string]: any } | string | undefined;
   }
 
   type OneOfSettings =
@@ -1020,7 +1020,7 @@ declare namespace Kakao {
       /**
        * 메시지 템플릿에서 활용할 arguments, ex) {'name':'kakao', 'url':'https://developers.kakao.com'}
        */
-      templateArgs?: KeyValue;
+      templateArgs?: { [key: string]: any };
 
       /**
        * 카카오톡이 설치되어 있지 않은 경우 마켓의 카카오톡 설치 페이지로 이동
@@ -1036,7 +1036,7 @@ declare namespace Kakao {
       /**
        * 카카오톡 공유 시 전송되는 알림에 포함되는 파라미터 ([전송 성공 알림 설정하기](https://developers.kakao.com/docs/latest/ko/message/js-link#set-kakaolink-callback))
        */
-      serverCallbackArgs?: KeyValue | string;
+      serverCallbackArgs?: { [key: string]: any } | string;
     }): void;
 
     /**
@@ -1070,7 +1070,7 @@ declare namespace Kakao {
       /**
        * 메시지 템플릿에서 활용할 arguments, ex) {'name':'kakao', 'url':'https://developers.kakao.com'}
        */
-      templateArgs?: KeyValue;
+      templateArgs?: { [key: string]: any };
 
       /**
        * 카카오톡이 설치되어 있지 않은 경우 마켓의 카카오톡 설치 페이지로 이동
@@ -1086,7 +1086,7 @@ declare namespace Kakao {
       /**
        * 카카오톡 공유 시 전송되는 알림에 포함되는 파라미터 ([전송 성공 알림 설정하기](https://developers.kakao.com/docs/latest/ko/message/js-link#set-kakaolink-callback))
        */
-      serverCallbackArgs?: KeyValue | string;
+      serverCallbackArgs?: { [key: string]: any } | string;
     }): void;
 
     /**
@@ -1124,7 +1124,7 @@ declare namespace Kakao {
       /**
        * 메시지 템플릿에서 활용할 arguments, ex) {'name':'kakao', 'url':'https://developers.kakao.com'}
        */
-      templateArgs?: KeyValue;
+      templateArgs?: { [key: string]: any };
 
       /**
        * 카카오톡이 설치되어 있지 않은 경우 마켓의 카카오톡 설치 페이지로 이동
@@ -1140,7 +1140,7 @@ declare namespace Kakao {
       /**
        * 카카오톡 공유 시 전송되는 알림에 포함되는 파라미터 ([전송 성공 알림 설정하기](https://developers.kakao.com/docs/latest/ko/message/js-link#set-kakaolink-callback))
        */
-      serverCallbackArgs?: KeyValue | string;
+      serverCallbackArgs?: { [key: string]: any } | string;
     }): void;
 
     /**
@@ -1167,7 +1167,7 @@ declare namespace Kakao {
       /**
        * 메시지 템플릿에서 활용할 arguments, ex) {'name':'kakao', 'url':'https://developers.kakao.com'}
        */
-      templateArgs?: KeyValue;
+      templateArgs?: { [key: string]: any };
 
       /**
        * 카카오톡이 설치되어 있지 않은 경우 마켓의 카카오톡 설치 페이지로 이동
@@ -1183,7 +1183,7 @@ declare namespace Kakao {
       /**
        * 카카오톡 공유 시 전송되는 알림에 포함되는 파라미터 ([전송 성공 알림 설정하기](https://developers.kakao.com/docs/latest/ko/message/js-link#set-kakaolink-callback))
        */
-      serverCallbackArgs?: KeyValue | string;
+      serverCallbackArgs?: { [key: string]: any } | string;
     }): void;
 
     /**
