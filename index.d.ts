@@ -685,41 +685,97 @@ declare namespace Kakao {
     }): Promise<FriendsPickerResponse | PickerError>;
   }
 
+  /**
+   * 메시지 하단에 추가되는 버튼 오브젝트입니다.
+   */
   interface ButtonObject {
+    /** 버튼의 타이틀 */
     title: string;
+
+    /** 버튼 클릭 시 이동할 링크 정보 */
     link: LinkObject;
   }
 
+  /**
+   * 가격 정보를 표현하기 위해 사용되는 오브젝트입니다.
+   */
   interface CommerceObject {
+    /** 정상 가격 */
     regularPrice: number;
+
+    /** 할인 가격 */
     discountPrice?: number | undefined;
+
+    /** 할인율 */
     discountRate?: number | undefined;
+
+    /** 정액 할인액 (할인율과 동시 사용 불가) */
     fixedDiscountPrice?: number | undefined;
 
+    /**
+     * 화폐 단위
+     * @defaultValue `"원"`
+     */
     currencyUnit?: string | undefined;
+
+    /**
+     * 화폐 단위 표기 위치 (0: 가격 뒤에 표기, 1: 가격 앞에 표기)
+     * @defaultValue `0`
+     */
     currencyUnitPosition?: number | undefined;
+
+    /** 상품 이름 */
     productName?: string | undefined;
   }
 
+  /**
+   * 콘텐츠의 내용을 담고 있는 오브젝트입니다.
+   */
   interface ContentObject {
+    /** 콘텐츠의 타이틀 */
     title: string;
+
+    /** 콘텐츠의 이미지 URL */
     imageUrl: string;
+
+    /** 콘텐츠 클릭 시 이동할 링크 정보 */
     link: LinkObject;
+
+    /** 콘텐츠의 이미지 너비 (단위: px) */
     imageWidth?: number | undefined;
+
+    /** 콘텐츠의 이미지 높이 (단위: px) */
     imageHeight?: number | undefined;
+
+    /** 콘텐츠의 상세 설명 */
     description?: string | undefined;
   }
 
+  /**
+   * 이미지 정보
+   */
   interface ImageInfos {
     original: {
+      /** 이미지 Full URL */
       url: string;
+
+      /** 이미지 사이즈, 단위: Byte */
       length: number;
+
+      /** 이미지 포맷 */
       content_type: string;
+
+      /** 이미지 가로 크기 */
       width: number;
+
+      /** 이미지 세로 크기 */
       height: number;
     };
   }
 
+  /**
+   * 아이템 목록 형태의 콘텐츠를 표현할 때 사용하는 오브젝트입니다.
+   */
   interface ItemContentObject {
     /**
      * 헤더 또는 프로필 영역에 출력될 텍스트
@@ -762,6 +818,9 @@ declare namespace Kakao {
     sumOp?: string;
   }
 
+  /**
+   * 텍스트 아이템 정보
+   */
   interface ItemObject {
     /**
      * 아이템 이름
@@ -774,28 +833,75 @@ declare namespace Kakao {
     itemOp: string;
   }
 
+  /**
+   * 메시지에서 콘텐츠 영역이나 버튼 클릭 시에 이동되는 링크 정보 오브젝트입니다. 오브젝트 내 프로퍼티 중 하나 이상은 반드시 존재해야 합니다.
+   */
   interface LinkObject {
+    /** PC 버전 카카오톡에서 사용하는 웹 링크 URL */
     webUrl?: string | undefined;
+
+    /** 모바일 카카오톡에서 사용하는 웹 링크 URL */
     mobileWebUrl?: string | undefined;
+
+    /** 안드로이드 카카오톡에서 사용하는 앱 링크 URL에 사용될 파라미터 */
     androidExecParams?: string | undefined;
+
+    /** iOS 카카오톡에서 사용하는 앱 링크 URL에 사용될 파라미터 */
     iosExecParams?: string | undefined;
   }
 
+  /**
+   * 좋아요 수, 댓글 수 등의 소셜 정보를 표현하기 위해 사용되는 오브젝트입니다.
+   */
   interface SocialObject {
+    /** 콘텐츠의 좋아요 수 */
     likeCount?: number | undefined;
+
+    /** 콘텐츠의 댓글 수 */
     commentCount?: number | undefined;
+
+    /** 콘텐츠의 공유 수 */
     sharedCount?: number | undefined;
+
+    /** 콘텐츠의 조회 수 */
     viewCount?: number | undefined;
+
+    /** 콘텐츠의 구독 수 */
     subscriberCount?: number | undefined;
   }
 
-  //
-  interface DefaultSettings<ObjectType extends string> {
-    objectType: ObjectType;
+  type ObjectType = "commerce" | "feed" | "list" | "location" | "text";
+
+  interface DefaultSettings<T extends ObjectType> {
+    /**
+     * 고정 값들("commerce", "feed", "list", "location", "text") 중 하나
+     */
+    objectType: T;
+
+    /**
+     * 기본 버튼 타이틀 변경, [내 애플리케이션 > 플랫폼 > 사이트 도메인]의 첫 번째 주소 링크 (buttonTitle 보다 buttons가 우선순위 높음)
+     */
     buttonTitle?: string | undefined;
+
+    /**
+     * 버튼 타이틀 및 링크 설정 가능, 최대 2개의 버튼 지원
+     */
     buttons?: ButtonObject[] | undefined;
-    installTalk?: boolean | undefined;
+
+    /**
+     * 카카오톡이 설치되어 있지 않은 경우 마켓의 카카오톡 설치 페이지로 이동
+     * @defaultValue `false`
+     */
+    installTalk?: boolean;
+
+    /**
+     * 데스크톱 환경에서 카카오톡 공유를 완료했을 때 호출되는 콜백 함수 (IE 미지원)
+     */
     callback?: (...args: any[]) => any;
+
+    /**
+     * 카카오톡 공유 시 전송되는 알림에 포함되는 파라미터 ([전송 성공 알림 설정하기](https://developers.kakao.com/docs/latest/ko/message/js-link#set-kakaolink-callback))
+     */
     serverCallbackArgs?: KeyValue | string | undefined;
   }
 
@@ -806,32 +912,83 @@ declare namespace Kakao {
     | DefaultCommerceSettings
     | DefaultTextSettings;
 
-  interface DefaultFeedSettings extends DefaultSettings<"feed"> {
+  interface DefaultCommerceSettings extends DefaultSettings<"commerce"> {
+    /**
+     * 메인 콘텐츠
+     */
     content: ContentObject;
+
+    /**
+     * 격 정보
+     */
+    commerce: CommerceObject;
+  }
+
+  interface DefaultFeedSettings extends DefaultSettings<"feed"> {
+    /**
+     * 메시지의 메인 콘텐츠 정보
+     */
+    content: ContentObject;
+
+    /**
+     * 아이템 영역에 포함할 콘텐츠
+     */
     itemContent?: ItemContentObject | undefined;
+
+    /**
+     * 콘텐츠에 대한 소셜 정보
+     */
     social?: SocialObject | undefined;
   }
 
   interface DefaultListSettings extends DefaultSettings<"list"> {
+    /**
+     * 헤더 타이틀
+     */
     headerTitle: string;
+
+    /**
+     * 헤더 링크
+     */
     headerLink: LinkObject;
+
+    /**
+     * 메인 콘텐츠
+     */
     contents: ContentObject[];
   }
 
   interface DefaultLocationSettings extends DefaultSettings<"location"> {
+    /**
+     * 메인 콘텐츠
+     */
     content: ContentObject;
+
+    /**
+     * 지도 뷰에서 사용 할 주소, ex) 성남시 분당구 판교역로 235
+     */
     address: string;
+
+    /**
+     * 지도 뷰에서 사용될 주소명, ex) 카카오 본사
+     */
     addressTitle?: string | undefined;
+
+    /**
+     * 소셜 정보
+     */
     social?: SocialObject | undefined;
   }
 
-  interface DefaultCommerceSettings extends DefaultSettings<"commerce"> {
-    content: ContentObject;
-    commerce: CommerceObject;
-  }
-
   interface DefaultTextSettings extends DefaultSettings<"text"> {
+    /**
+     * 최대 200자의 텍스트
+     */
     text: string;
+
+    /**
+     * 텍스트 클릭 시 이동할 링크 정보
+     */
     link: LinkObject;
   }
 
