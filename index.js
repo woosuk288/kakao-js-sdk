@@ -3,7 +3,6 @@ export const initKakao = (jsKey) => {
     return new Promise((resolve, reject) => {
       var script = document.createElement("script");
       script.onload = function () {
-        //do stuff with the script
         // console.log("onload : ", document);
         Kakao.init(jsKey);
         resolve(true);
@@ -16,11 +15,9 @@ export const initKakao = (jsKey) => {
         "sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNWf/";
       script.crossOrigin = "anonymous";
 
-      document.head.appendChild(script); //or something of the likes
+      document.head.appendChild(script);
     });
   } else {
     // console.info("Loading Kakao...");
   }
 };
-
-// nextjs로 한번 더보고 publish 하자
