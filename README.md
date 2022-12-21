@@ -3,12 +3,17 @@
 [Docs](https://developers.kakao.com/docs/latest/ko/kakaologin/js) |
 [Reference](https://developers.kakao.com/sdk/reference/js/release/Kakao.html)
 
-[Kakao SDK for JavaScript(2.0.0)](https://developers.kakao.com/docs/latest/ko/sdk-download/js)
+[Kakao SDK for JavaScript(2.0.1)](https://developers.kakao.com/docs/latest/ko/sdk-download/js)
 
 ## Notice
 
-테스트가 제대로 되지 않았습니다. 개선 사항이나 문제가 되는 부분들에 도움 주시면 감사하겠습니다.
+Kakao Javascript SDK를 쪼끔 더 편하게 사용하고 싶다면 👋👋👋
 
+
+## Feature
+
+- <b>initKakao</b> (Kakao Javascript SDK를 동적으로 불러와 초기화하는 함수)
+- <b>window.Kakao</b> (typescript namespace, type 사용 가능)
 
 ## Installation
 
@@ -18,19 +23,33 @@ $ npm i kakao-js-sdk
 
 ## Usage
 
-```ts
-function doWithKakao() {
-    const { default: Kakao } = await import("kakao-js-sdk");
-    Kakao.isInitialized() === false && Kakao.init("YOUR_JAVASCRIPT_KEY");
-};
+- #### type만 사용할 경우
+```js
+// 패키지 설치 후
+window.Kakao......
 ```
 
-### <center> OR </center>
-```ts
-import Kakao from "kakao-js-sdk";
+- #### React(CRA, NextJS) 등의 최상위 파일(App.js, _app.js)에서 동적으로 로드 후 사용할 경우
 
-    //
-    Kakao.isInitialized() === false && Kakao.init("YOUR_JAVASCRIPT_KEY");
+```ts
+// App.js,_app.js 등
+import { initKakao } from 'kakao-js-sdk';
+initKakao('YOUR_JAVASCRIPT_KEY');
+
+// Login.js, Share.js 등
+window.Kakao......
+```
+
+- #### 특정 함수나 파일에서만 사용할 경우
+
+```ts
+import { initKakao } from 'kakao-js-sdk';
+
+function handleYourLogin () {
+    initKakao('YOUR_JAVASCRIPT_KEY').then((isloaded) => {
+        window.Kakao......
+    })
+}
 ```
 
 ## Contribute

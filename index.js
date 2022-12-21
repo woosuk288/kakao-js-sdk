@@ -1,11 +1,26 @@
-import * as Kakao from "./kakaoJsSdk";
+export const initKakao = (jsKey) => {
+  if (typeof window !== "undefined") {
+    return new Promise((resolve, reject) => {
+      var script = document.createElement("script");
+      script.onload = function () {
+        //do stuff with the script
+        // console.log("onload : ", document);
+        Kakao.init(jsKey);
+        resolve(true);
+      };
+      script.onerror = (e) => {
+        reject(e);
+      };
+      script.src = "https://t1.kakaocdn.net/kakao_js_sdk/2.0.1/kakao.min.js";
+      script.integrity =
+        "sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNWf/";
+      script.crossOrigin = "anonymous";
 
-export const API = Kakao.API;
-export const Auth = Kakao.Auth;
-export const Channel = Kakao.Channel;
-export const Navi = Kakao.Navi;
-export const Picker = Kakao.Picker;
-export const Share = Kakao.Share;
-export const Story = Kakao.Story;
+      document.head.appendChild(script); //or something of the likes
+    });
+  } else {
+    // console.info("Loading Kakao...");
+  }
+};
 
-export default Kakao;
+// nextjs로 한번 더보고 publish 하자
