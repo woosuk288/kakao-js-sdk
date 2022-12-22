@@ -19,5 +19,6 @@ export const initKakao = (jsKey) => {
     });
   } else {
     // console.info("Loading Kakao...");
+    resolve(false);
   }
 };

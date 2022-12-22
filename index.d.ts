@@ -1339,6 +1339,6 @@ declare global {
  * Kakao JS Script를 동적으로 불러오고 초기화 시킨다.
  * @param {string} "JavaScript 키"
  */
-export function initKakao(jsKey: string): Promise<boolean> | void;
+export function initKakao(jsKey: string): Promise<boolean>;
 
 // export as namespace Kakao;
