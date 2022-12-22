@@ -1,0 +1,8 @@
+node_modules/
+lib/
+# src/
+# public/
+tsconfig.json
+
+.prettierrc
+.prettierignore

@@ -1,3 +1,35 @@
+/**
+ * Kakao Javascript SDK 동적으로 불러오고 초기화 시킨다.
+ * @param {string} javascript키
+ * @returns {Promise} SDK 로드 여부
+ */
+export const initKakao = (jsKey: string) => {
+  return new Promise(
+    (resolve: (isLoaded: boolean) => void, reject: (error: any) => void) => {
+      if (typeof window !== "undefined") {
+        var script = document.createElement("script");
+        script.onload = function () {
+          // console.log("onload : ", document);
+          window.Kakao.init(jsKey);
+          resolve(true);
+        };
+        script.onerror = (e) => {
+          reject(e);
+        };
+        script.src = "https://t1.kakaocdn.net/kakao_js_sdk/2.0.1/kakao.min.js";
+        script.integrity =
+          "sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNWf/";
+        script.crossOrigin = "anonymous";
+
+        document.head.appendChild(script);
+      } else {
+        // console.info("Loading Kakao...");
+        // resolve(false);
+      }
+    }
+  );
+};
+
 declare global {
   /**
    * @see [Kakao](https://developers.kakao.com/sdk/reference/js/release/Kakao.html)
@@ -1326,19 +1358,5 @@ declare global {
         text?: string;
       }): void;
     }
-
-    /**
-     * 공식 문서에 없는 함수
-     * 카카오 동적 로딩 및 초기화
-     */
-    // export function initKakao(jsKey: string): void;
   }
 }
-
-/**
- * Kakao JS Script를 동적으로 불러오고 초기화 시킨다.
- * @param {string} "JavaScript 키"
- */
-export function initKakao(jsKey: string): Promise<boolean>;
-
-// export as namespace Kakao;
