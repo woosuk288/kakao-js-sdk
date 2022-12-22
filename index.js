@@ -1,6 +1,6 @@
 export const initKakao = (jsKey) => {
-  if (typeof window !== "undefined") {
-    return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
+    if (typeof window !== "undefined") {
       var script = document.createElement("script");
       script.onload = function () {
         // console.log("onload : ", document);
@@ -16,9 +16,9 @@ export const initKakao = (jsKey) => {
       script.crossOrigin = "anonymous";
 
       document.head.appendChild(script);
-    });
-  } else {
-    // console.info("Loading Kakao...");
-    resolve(false);
-  }
+    } else {
+      // console.info("Loading Kakao...");
+      resolve(false);
+    }
+  });
 };
